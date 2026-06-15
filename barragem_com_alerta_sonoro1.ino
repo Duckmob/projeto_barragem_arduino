@@ -28,7 +28,6 @@ void setup() {
 void loop() {
   long duration, cm;
   
-  // Emissão do pulso
   pinMode(pinPing, OUTPUT);
   digitalWrite(pinPing, LOW);
   delayMicroseconds(2);
@@ -36,18 +35,16 @@ void loop() {
   delayMicroseconds(5);
   digitalWrite(pinPing, LOW);
   
-  // Recepção
+
   pinMode(pinPing, INPUT);
   duration = pulseIn(pinPing, HIGH);
   cm = microsecondsToCm(duration);
-  
-  // Correção da Exibição no LCD
+
   lcd.setCursor(0, 1);
   lcd.print("dist: ");
-  lcd.print(cm); // Imprime a variável separadamente
-  lcd.print(" cm    "); // Adiciona espaços para limpar resíduos antigos
+  lcd.print(cm);
+  lcd.print(" cm    ");
   
-  // Lógica de Controle
   if (cm <= limiarCritico && !isScreaming) {
     isScreaming = true;
     digitalWrite(pinLedAlert, HIGH);
@@ -62,6 +59,6 @@ void loop() {
 }
 
 long microsecondsToCm(long duration) {
-  // Nota: Para maior precisão, considere usar 'float' em vez de 'long'
+
   return duration / 58; 
 }
